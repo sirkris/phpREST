@@ -7,5 +7,6 @@ It's all for the sake of human usability.  In this example, each theoretical "/<
 subordinate to the subdirectory of the class from which it is extending if there are multiple levels involved.  You should just 
 do it in whatever way makes sense to you.
 
-Note that the filenames themselves MUST be in the form of "<class name>.class.php", where "<class name>" is the name of the class 
-contained in the file.  Anything else will either generate an error or cause the file to be ignored.
+The recommended naming convention for the class filenames is "<class name>.class.php", where "<class name>" is the name of the class 
+contained in the file.  Of course, you can name them whatever you wish, so long as they match their corresponding entries in the 
+$class_paths array in config_dispatch.class.php.

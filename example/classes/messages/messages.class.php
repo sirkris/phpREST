@@ -10,9 +10,10 @@ class messages extends REST
 		
 	}
 	
+	/* Create a new message.  --Kris */
 	public static function POST()
 	{
-		return 405;
+		
 	}
 	
 	public static function PUT()

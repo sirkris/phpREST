@@ -10,10 +10,9 @@ class messageid extends messages
 		
 	}
 	
-	/* Create a new message.  --Kris */
 	public static function POST()
 	{
-		
+		return 405;
 	}
 	
 	/* Update the specified message .  --Kris */
