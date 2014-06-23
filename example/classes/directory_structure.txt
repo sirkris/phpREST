@@ -1,4 +1,4 @@
-The directory structure within classes/ is entirely up to you.  It has no effect on how each classes is handled by phpREST.  
+The directory structure within classes/ is entirely up to you.  It has no effect on how each class is handled by phpREST.  
 So long as the paths in the dispatch table are accurate, it doesn't matter how you choose to organize the files in here.  You 
 could mix them around in a maze of subdirectories or you could just dump them all into the classes/ subdirectory together.
 
