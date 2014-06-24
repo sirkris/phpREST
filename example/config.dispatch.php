@@ -10,6 +10,7 @@ class Config_Dispatch
 					"comments"		=> "/posts/<postid>/comments", 
 					"cid"			=> "/posts/<postid>/comments/<cid>", 
 					"users" 		=> "/users", 
+					"userid" 		=> "/users/<userid>", 
 					"username" 		=> "/users/<username>", 
 					"men" 			=> "/users/men", 
 					"women" 		=> "/users/women", 
@@ -26,6 +27,7 @@ class Config_Dispatch
 					"comments"		=> "/posts/comments/comments.class.php", 
 					"cid"			=> "/posts/comments/cid.class.php", 
 					"users"			=> "/users/users.class.php", 
+					"userid"		=> "/users/userid.class.php", 
 					"username"		=> "/users/username.class.php", 
 					"men"			=> "/users/men.class.php", 
 					"women"			=> "/users/women.class.php", 
@@ -70,6 +72,11 @@ class Config_Dispatch
 					"users"			=> array( 
 									"GET"		=> "Retrieve all users.", 
 									"PUT"		=> "Update all users." 
+								), 
+					"userid"		=> array( 
+									"GET"		=> "Retrieve a specific user.", 
+									"PUT"		=> "Update a specific user.", 
+									"DELETE"	=> "Delete a specific user." 
 								), 
 					"username"		=> array( 
 									"GET"		=> "Retrieve a specific user.", 
@@ -157,6 +164,9 @@ class Config_Dispatch
 													"Max"		=> 999 
 												)
 										) 
+								), 
+					"userid"		=> array( 
+									
 								), 
 					"username"		=> array( 
 									"GET"

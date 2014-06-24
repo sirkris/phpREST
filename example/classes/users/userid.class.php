@@ -1,11 +1,11 @@
 <?php
 
-class username extends users
+class userid extends users
 {
-	public static $info = "Read or write data pertaining to a specific username.";
+	public static $info = "Read or write data pertaining to a specific userid.";
 	
-	/* Get info on specified username.  --Kris */
-	public static function GET( $username, $cols = "username, registered, lastlogin, lastaction, lastip, bio, gender, status, friends, messages" )
+	/* Get info on specified userid.  --Kris */
+	public static function GET( $userid, $cols = "username, registered, lastlogin, lastaction, lastip, bio, gender, status, friends, messages" )
 	{
 		try
 		{
@@ -54,11 +54,17 @@ class username extends users
 			return 403;
 		}
 		
+		if ( strpos( $cols, "username" ) === FALSE 
+			&& ( in_array( $cols_split, "friends" ) || in_array( $cols_split, "messages" ) ) )
+		{
+			$cols .= ", username";
+		}
+		
 		if ( $cols != "" )
 		{
 			try
 			{
-				$data = $sql->query( "SELECT $cols FROM users WHERE username = ?", array( $username ) );
+				$data = $sql->query( "SELECT $cols FROM users WHERE userid = ?", array( $userid ) );
 			}
 			catch ( Exception $e )
 			{
@@ -72,59 +78,24 @@ class username extends users
 		
 		if ( in_array( $cols_split, "friends" ) )
 		{
-			$data["friends"] = Dispatch::URI( "friends", $username );
+			$data["friends"] = Dispatch::URI( "friends", $data["username"] );
 		}
 		
 		if ( in_array( $cols_split, "messages" ) )
 		{
-			$data["messages"] = Dispatch::URI( "user_messages", $username );
+			$data["messages"] = Dispatch::URI( "user_messages", $data["username"] );
 		}
 		
 		return array( "status" => 200, "data" => $data );
 	}
 	
-	/* Create a new user with the specified username, password, and gender.  --Kris */
-	public static function POST( $username, $password, $gender )
+	public static function POST( $userid, $password, $gender )
 	{
-		try
-		{
-			require_once( "SQL/config_sql.class.php" );
-			$sql = (new Config_SQL)->load_db();
-		}
-		catch ( Exception $e )
-		{
-			return array( "status" => 503, "error" => "Unable to connect to database : " . $e->getMessage() );
-		}
-		
-		try
-		{
-			$num = $sql->query( "SELECT username FROM users WHERE username = ?", array( $username ), SQL_RETURN_NUMROWS );
-		}
-		catch ( Exception $e )
-		{
-			return array( "status" => 500, "error" => "SQL error : " . $e->getMessage() );
-		}
-		
-		if ( $num > 0 )
-		{
-			return array( "status" => 409, "error" => "Username '$username' already exists!" );
-		}
-		
-		try
-		{
-			$affrows = $sql->query( "INSERT INTO users ( username, password, registered, gender, status ) VALUES ( ?, ?, ?, ?, ? )", 
-					array( $username, hash( "sha512", $password ), time(), $gender, 1 ), SQL_RETURN_AFFECTEDROWS );
-		}
-		catch ( Exception $e )
-		{
-			return array( "status" => 500, "error" => "SQL error : " . $e->getMessage() );
-		}
-		
-		return 201;
+		return 405;
 	}
 	
 	/* Update the specified user.  --Kris */
-	public static function PUT( $username, ...$params )
+	public static function PUT( $userid, ...$params )
 	{
 		try
 		{
@@ -148,11 +119,11 @@ class username extends users
 			}
 		}
 		
-		$vals[] = $username;  // For the where clause.  --Kris
+		$vals[] = $userid;  // For the where clause.  --Kris
 		
 		try
 		{
-			$affrows = $sql->query( "UPDATE users SET $vars WHERE username = ?", $vals, SQL_RETURN_AFFECTEDROWS );
+			$affrows = $sql->query( "UPDATE users SET $vars WHERE userid = ?", $vals, SQL_RETURN_AFFECTEDROWS );
 		}
 		catch ( Exception $e )
 		{
@@ -163,7 +134,7 @@ class username extends users
 	}
 	
 	/* Delete the specified user.  --Kris */
-	public static function DELETE( $username )
+	public static function DELETE( $userid )
 	{
 		try
 		{
@@ -177,7 +148,7 @@ class username extends users
 		
 		try
 		{
-			$affrows = $sql->query( "DELETE FROM users WHERE username = ?", array( $username ), SQL_RETURN_AFFECTEDROWS );
+			$affrows = $sql->query( "DELETE FROM users WHERE userid = ?", array( $userid ), SQL_RETURN_AFFECTEDROWS );
 		}
 		catch ( Exception $e )
 		{
