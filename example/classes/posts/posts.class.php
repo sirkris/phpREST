@@ -67,7 +67,19 @@ class posts extends REST
 		
 		// Various notification hooks could go here; emails, etc.  --Kris
 		
-		return 201;
+		try
+		{
+			$data = $sql->query( "SELECT postid FROM posts WHERE title = ? AND body = ? AND author = ? AND author_ip = ? LIMIT 1 ORDER BY postid DESC", 
+					array( $title, $body, $author, $author_ip ) );
+		}
+		catch ( Exception $e )
+		{
+			return array( "status" => 500, "error" => "SQL error : " . $e->getMessage() );
+		}
+		
+		$data["post_uri"] = Dispatch::URI( "postid", $data["postid"] );
+		
+		return array( "status" => 201, "data" => $data );
 	}
 	
 	public static function PUT()
