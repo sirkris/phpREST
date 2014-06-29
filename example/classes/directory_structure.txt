@@ -1,0 +1,12 @@
+The directory structure within classes/ is entirely up to you.  It has no effect on how each class is handled by phpREST.  
+So long as the paths in the dispatch table are accurate, it doesn't matter how you choose to organize the files in here.  You 
+could mix them around in a maze of subdirectories or you could just dump them all into the classes/ subdirectory together.
+
+That said, it is recommended that you create a logical directory structure that will make it easy to organize your class files.  
+It's all for the sake of human usability.  In this example, each theoretical "/<class name>" exists as its own subdirectory, 
+subordinate to the subdirectory of the class from which it is extending if there are multiple levels involved.  You should just 
+do it in whatever way makes sense to you.
+
+The recommended naming convention for the class filenames is "<class name>.class.php", where "<class name>" is the name of the class 
+contained in the file.  Of course, you can name them whatever you wish, so long as they match their corresponding entries in the 
+$class_paths array in config_dispatch.class.php.
