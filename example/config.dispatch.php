@@ -50,7 +50,6 @@ class Config_Dispatch
 					"posts"			=> array( 
 									"GET"		=> "Retrieve all posts.", 
 									"POST"		=> "Create a new post.", 
-									"PUT"		=> "Update all posts.", 
 									"DELETE"	=> "Delete all posts." 
 								), 
 					"postid"		=> array( 
@@ -61,7 +60,6 @@ class Config_Dispatch
 					"comments"		=> array( 
 									"GET"		=> "Get all comments for the specified post.", 
 									"POST"		=> "Create a new comment under the specified post.", 
-									"PUT"		=> "Update all comments for the specified post.", 
 									"DELETE"	=> "Delete all comments for the specified post." 
 								), 
 					"cid"			=> array( 
