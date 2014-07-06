@@ -89,7 +89,7 @@ class Dispatch extends Config_Dispatch
 		}
 		
 		/* Validate and sort the parameters against the dispatch specification.  --Kris */
-		// NOTE - URL parameters must also be defined in that array to avoid coupling.  Set "InURL" to TRUE for those.
+		// NOTE - URL parameters must also be defined in that array to avoid coupling.  Set "InURI" to TRUE for those.
 		if ( $params = self::Validate_Params( $class, $method, $params ) === FALSE )
 		{
 			return 400;  // Bad request.
@@ -108,7 +108,7 @@ class Dispatch extends Config_Dispatch
 		{
 			if ( isset( $params[$arg] ) || 
 				( ( !isset( $properties["Required"] ) || $properties["Required"] == FALSE ) 
-					&& ( !isset( $properties["InURL"] ) || $properties["InURL"] == FALSE ) ) )
+					&& ( !isset( $properties["InURI"] ) || $properties["InURI"] == FALSE ) ) )
 			{
 				/* If it's not set and there's a default, set to default.  Otherwise, skip to next arg on the list.  --Kris */
 				if ( !isset( $params[$arg] ) )
@@ -167,7 +167,7 @@ class Dispatch extends Config_Dispatch
 							break;
 						case "help":
 						case "required":
-						case "inurl":
+						case "InURI":
 							// Do nothing.  --Kris
 							break;
 						case "default":

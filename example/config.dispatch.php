@@ -164,16 +164,14 @@ class Config_Dispatch
 										) 
 								), 
 					"userid"		=> array( 
-									
-								), 
-					"username"		=> array( 
 									"GET"
 										=> array( 
-											"username"
+											"userid"
 												=> array( 
-													"Help"		=> "The username being queried.", 
-													"Type"		=> "string", 
-													"InURL"		=> TRUE 
+													"Help"		=> "The userid being queried.", 
+													"Type"		=> "int", 
+													// Specified in the URI instead of in the parameters.  --Kris
+													"InURI"		=> TRUE 
 												), 
 											"cols"
 												=> array( 
@@ -182,21 +180,353 @@ class Config_Dispatch
 													"Default" 	=> "username, registered, lastlogin, lastaction, lastip, bio, gender, status, friends, messages" 
 												) 
 										), 
+									"PUT"
+										=> array( 
+											"userid"
+												=> array( 
+													"Help"		=> "The userid being updated.", 
+													"Type"		=> "int", 
+													"InURI"		=> TRUE 
+												), 
+											// 0 or more unnamed parameters following these rules (denoted by the "...").  --Kris
+											"...cols"
+												=> array( 
+													"Help"		=> "The columns to update with specified values.", 
+													"Type"		=> "string", 
+													// A regex representation of the required format for this string.  --Kris
+													"Format"	=> '/.+=.+/' 
+													// Specify the "Min_Params" key to dictate a minimum number.  Same goes for "Max_Params".  --Kris
+												) 
+										), 
+									"DELETE"
+										=> array( 
+											"userid"
+												=> array( 
+													"Help"		=> "The userid being deleted.", 
+													"Type"		=> "int", 
+													"InURI"		=> TRUE 
+												) 
+										)
+								), 
+					"username"		=> array( 
+									"GET"
+										=> array( 
+											"username"
+												=> array( 
+													"Help"		=> "The username being queried.", 
+													"Type"		=> "string", 
+													// Specified in the URI instead of in the parameters.  --Kris
+													"InURI"		=> TRUE 
+												), 
+											"cols"
+												=> array( 
+													"Help" 		=> "The comma-delineated properties to be retrieved from the user.", 
+													"Type"		=> "string", 
+													"Default" 	=> "username, registered, lastlogin, lastaction, lastip, bio, gender, status, friends, messages" 
+												) 
+										), 
+									"POST"
+										=> array( 
+											"username"
+												=> array( 
+													"Help"		=> "The username being created.", 
+													"Type"		=> "string", 
+													// The following values aren't allowed, regardless of case.  --Kris
+													"Disallowed_Case_Insensitive"
+															=> array( 
+																"admin", 
+																"administrator", 
+																"moderator", 
+																"sysop", 
+																"sysadmin", 
+																"root", 
+																"webmaster" 
+															), 
+													// The following values aren't allowed if the case matches.  --Kris
+													"Disallowed"	=> array( 
+																"TESTING", 
+																"sPaMb0t", 
+																"SpAmB0T" 
+																// ....But "spamb0t" and "Spamb0t" are ok.  --Kris
+															), 
+													"InURI"		=> TRUE 
+												), 
+											"gender"
+												=> array( 
+													// I realize there are more gender identities than "man" and "woman".  But this is just an 
+													// example and I'd like to keep it as simple as possible for the sake of laziness.  Please 
+													// don't consider this a slight against trans and people with other gender identities.  --Kris
+													"Help"		=> "The gender of the user being created.", 
+													"Type"		=> "string", 
+													// Value must match one of these entries or it will be rejected.  --Kris
+													"Allowed"	=> array( 
+																"values" => array( 
+																		"man", 
+																		"woman" 
+																	), 
+																"case_sensitive" => FALSE 
+															) 
+												), 
+											"password"
+												=> array( 
+													"Help"		=> "The unencrypted password for the new user.  Leave blank to lock the account until the user activates it and creates their own password.", 
+													"Type"		=> "string", 
+													"Min"		=> 6, 
+													"Default"	=> NULL 
+												) 
+										), 
+									"PUT"
+										=> array( 
+											"username"
+												=> array( 
+													"Help"		=> "The username being updated.", 
+													"Type"		=> "string", 
+													"InURI"		=> TRUE 
+												), 
+											// 0 or more unnamed parameters following these rules (denoted by the "...").  --Kris
+											"...cols"
+												=> array( 
+													"Help"		=> "The columns to update with specified values.", 
+													"Type"		=> "string", 
+													// A regex representation of the required format for this string.  --Kris
+													"Format"	=> '/.+=.+/' 
+													// Specify the "Min_Params" key to dictate a minimum number.  Same goes for "Max_Params".  --Kris
+												) 
+										), 
+									"DELETE"
+										=> array( 
+											"username"
+												=> array( 
+													"Help"		=> "The username being deleted.", 
+													"Type"		=> "string", 
+													"InURI"		=> TRUE 
+												) 
+										)
 								), 
 					"men"			=> array( 
-									
+									"GET"
+										=> array( 
+											"limit"
+												=> array( 
+													"Help"		=> "Number of results to be returned.", 
+													"Type"		=> "int", 
+													"Default"	=> 25, 
+													"Min"		=> 1, 
+													"Max"		=> 250 
+												), 
+											"page"
+												=> array( 
+													"Help"		=> "The page of results to be retrieved.  Offset = limit * (page - 1).  Ignored if offset is supplied.", 
+													"Type"		=> "int", 
+													"Default"	=> 1, 
+												), 
+											"offset"
+												=> array( 
+													"Help"		=> "Overrides page to specify an exact starting record.", 
+													"Type"		=> "int", 
+													"Min"		=> 1, 
+													"Required"	=> FALSE 
+												)
+										), 
+									"PUT"
+										=> array( 
+											"status"
+												=> array( 
+													"Help"		=> "A numeric status code.  I.e. 0 = pending, 1 = active, 2 = admin, 3 = banned, etc.", 
+													"Type"		=> "int" 
+												) 
+										), 
+									"DELETE"
+										=> array( 
+											// No args.  --Kris
+										)
 								), 
 					"women"			=> array( 
-									
+									"GET"
+										=> array( 
+											"limit"
+												=> array( 
+													"Help"		=> "Number of results to be returned.", 
+													"Type"		=> "int", 
+													"Default"	=> 25, 
+													"Min"		=> 1, 
+													"Max"		=> 250 
+												), 
+											"page"
+												=> array( 
+													"Help"		=> "The page of results to be retrieved.  Offset = limit * (page - 1).  Ignored if offset is supplied.", 
+													"Type"		=> "int", 
+													"Default"	=> 1, 
+												), 
+											"offset"
+												=> array( 
+													"Help"		=> "Overrides page to specify an exact starting record.", 
+													"Type"		=> "int", 
+													"Min"		=> 1, 
+													"Required"	=> FALSE 
+												)
+										), 
+									"PUT"
+										=> array( 
+											"status"
+												=> array( 
+													"Help"		=> "A numeric status code.  I.e. 0 = pending, 1 = active, 2 = admin, 3 = banned, etc.", 
+													"Type"		=> "int" 
+												) 
+										), 
+									"DELETE"
+										=> array( 
+											// No args.  --Kris
+										)
 								), 
 					"friends"		=> array( 
-									
+									"GET"
+										=> array( 
+											"username"
+												=> array( 
+													"Help"		=> "The username whose friends list is being queried.", 
+													"Type"		=> "string", 
+													"InURI"		=> TRUE 
+												), 
+											"limit"
+												=> array( 
+													"Help"		=> "Number of results to be returned.", 
+													"Type"		=> "int", 
+													"Default"	=> 25, 
+													"Min"		=> 1, 
+													"Max"		=> 250 
+												), 
+											"page"
+												=> array( 
+													"Help"		=> "The page of results to be retrieved.  Offset = limit * (page - 1).  Ignored if offset is supplied.", 
+													"Type"		=> "int", 
+													"Default"	=> 1, 
+												), 
+											"offset"
+												=> array( 
+													"Help"		=> "Overrides page to specify an exact starting record.", 
+													"Type"		=> "int", 
+													"Min"		=> 1, 
+													"Required"	=> FALSE 
+												)
+										), 
+									"DELETE"
+										=> array( 
+											"username"
+												=> array( 
+													"Help"		=> "The username whose friends list is being deleted.", 
+													"Type"		=> "string", 
+													"InURI"		=> TRUE 
+												)
+										)
 								), 
 					"friend_username"	=> array( 
-									
+									"GET"
+										=> array( 
+											"username"
+												=> array( 
+													"Help"		=> "The username whose friend list entry is being queried.", 
+													"Type"		=> "string", 
+													"InURI"		=> TRUE 
+												), 
+											"friend_username"
+												=> array( 
+													"Help"		=> "The username of the friend list entry being queried.", 
+													"Type"		=> "string", 
+													"InURI"		=> TRUE 
+												) 
+										), 
+									"POST"
+										=> array( 
+											"username"
+												=> array( 
+													"Help"		=> "The first of two usernames to be made friends (order doesn't matter).", 
+													"Type"		=> "string", 
+													"InURI"		=> TRUE 
+												), 
+											"friend_username"
+												=> array( 
+													"Help"		=> "The second of two usernames to be made friends (order doesn't matter).", 
+													"Type"		=> "string", 
+													"InURI"		=> TRUE 
+												) 
+										), 
+									"PUT"
+										=> array( 
+											"username"
+												=> array( 
+													"Help"		=> "The first of two usernames in the friendship entry (order doesn't matter) being updated.", 
+													"Type"		=> "string", 
+													"InURI"		=> TRUE 
+												), 
+											"friend_username"
+												=> array( 
+													"Help"		=> "The second of two usernames in the friendship entry (order doesn't matter) being updated.", 
+													"Type"		=> "string", 
+													"InURI"		=> TRUE 
+												), 
+											"since"
+												=> array( 
+													"Help"		=> "A Unix timestamp denoting when they became friends.  This is the only field that can be updated because I said so.", 
+													"Type"		=> "int" 
+												) 
+										), 
+									"DELETE"
+										=> array( 
+											"username"
+												=> array( 
+													"Help"		=> "The first of two usernames in the friendship entry (order doesn't matter) being deleted.", 
+													"Type"		=> "string", 
+													"InURI"		=> TRUE 
+												), 
+											"friend_username"
+												=> array( 
+													"Help"		=> "The first of two usernames in the friendship entry (order doesn't matter) being deleted.", 
+													"Type"		=> "string", 
+													"InURI"		=> TRUE 
+												) 
+										) 
 								), 
-					"user_messages"	=> array( 
-									
+					"user_messages" 	=> array( 
+									"GET"
+										=> array( 
+											"username"
+												=> array( 
+													"Help"		=> "The username whose messages are being queried.", 
+													"Type"		=> "string", 
+													"InURI"		=> TRUE 
+												), 
+											"limit"
+												=> array( 
+													"Help"		=> "Number of results to be returned.", 
+													"Type"		=> "int", 
+													"Default"	=> 25, 
+													"Min"		=> 1, 
+													"Max"		=> 250 
+												), 
+											"page"
+												=> array( 
+													"Help"		=> "The page of results to be retrieved.  Offset = limit * (page - 1).  Ignored if offset is supplied.", 
+													"Type"		=> "int", 
+													"Default"	=> 1, 
+												), 
+											"offset"
+												=> array( 
+													"Help"		=> "Overrides page to specify an exact starting record.", 
+													"Type"		=> "int", 
+													"Min"		=> 1, 
+													"Required"	=> FALSE 
+												)
+										), 
+									"DELETE"
+										=> array( 
+											"username"
+												=> array( 
+													"Help"		=> "The username whose (incoming) messages are being deleted.", 
+													"Type"		=> "string", 
+													"InURI"		=> TRUE 
+												)
+										)
 								) 
 				);
 }
