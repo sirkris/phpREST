@@ -194,8 +194,9 @@ class Config_Dispatch
 													"Help"		=> "The columns to update with specified values.", 
 													"Type"		=> "string", 
 													// A regex representation of the required format for this string.  --Kris
-													"Format"	=> '/.+=.+/' 
+													"Format"	=> '/.+=.+/', 
 													// Specify the "Min_Params" key to dictate a minimum number.  Same goes for "Max_Params".  --Kris
+													"Min_Params"	=> 1 
 												) 
 										), 
 									"DELETE"
@@ -289,8 +290,9 @@ class Config_Dispatch
 													"Help"		=> "The columns to update with specified values.", 
 													"Type"		=> "string", 
 													// A regex representation of the required format for this string.  --Kris
-													"Format"	=> '/.+=.+/' 
+													"Format"	=> '/.+=.+/', 
 													// Specify the "Min_Params" key to dictate a minimum number.  Same goes for "Max_Params".  --Kris
+													"Min_Params"	=> 1 
 												) 
 										), 
 									"DELETE"
