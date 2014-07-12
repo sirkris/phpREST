@@ -84,7 +84,7 @@ class username extends users
 	}
 	
 	/* Create a new user with the specified username, password, and gender.  --Kris */
-	public static function POST( $username, $password, $gender )
+	public static function POST( $username, $gender, $password = NULL )
 	{
 		try
 		{
@@ -110,10 +110,16 @@ class username extends users
 			return array( "status" => 409, "error" => "Username '$username' already exists!" );
 		}
 		
+		$status = 1;
+		if ( $password == NULL )
+		{
+			$status = 0;
+		}
+		
 		try
 		{
 			$affrows = $sql->query( "INSERT INTO users ( username, password, registered, gender, status ) VALUES ( ?, ?, ?, ?, ? )", 
-					array( $username, hash( "sha512", $password ), time(), $gender, 1 ), SQL_RETURN_AFFECTEDROWS );
+					array( $username, hash( "sha512", $password ), time(), $gender, $status ), SQL_RETURN_AFFECTEDROWS );
 		}
 		catch ( Exception $e )
 		{
