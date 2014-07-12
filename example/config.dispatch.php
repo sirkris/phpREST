@@ -50,7 +50,6 @@ class Config_Dispatch
 					"posts"			=> array( 
 									"GET"		=> "Retrieve all posts.", 
 									"POST"		=> "Create a new post.", 
-									"PUT"		=> "Update all posts.", 
 									"DELETE"	=> "Delete all posts." 
 								), 
 					"postid"		=> array( 
@@ -61,7 +60,6 @@ class Config_Dispatch
 					"comments"		=> array( 
 									"GET"		=> "Get all comments for the specified post.", 
 									"POST"		=> "Create a new comment under the specified post.", 
-									"PUT"		=> "Update all comments for the specified post.", 
 									"DELETE"	=> "Delete all comments for the specified post." 
 								), 
 					"cid"			=> array( 
@@ -112,22 +110,301 @@ class Config_Dispatch
 	
 	public static $class_args = array( 
 					"messages"		=> array( 
-									
+									"GET"
+										=> array( 
+											"limit"
+												=> array( 
+													"Help"		=> "Number of results to be returned.", 
+													"Type"		=> "int", 
+													"Default"	=> 25, 
+													"Min"		=> 1, 
+													"Max"		=> 250 
+												), 
+											"page"
+												=> array( 
+													"Help"		=> "The page of results to be retrieved.  Offset = limit * (page - 1).  Ignored if offset is supplied.", 
+													"Type"		=> "int", 
+													"Default"	=> 1, 
+												), 
+											"offset"
+												=> array( 
+													"Help"		=> "Overrides page to specify an exact starting record.", 
+													"Type"		=> "int", 
+													"Min"		=> 1, 
+													"Required"	=> FALSE 
+												)
+										), 
+									"POST"
+										=> array( 
+											"from_username"
+												=> array( 
+													"Help"		=> "The username of the person sending the message.", 
+													"Type"		=> "string" 
+												), 
+											"to_username"
+												=> array( 
+													"Help"		=> "The username of the recipient.", 
+													"Type"		=> "string" 
+												), 
+											"subject"
+												=> array( 
+													"Help"		=> "The subject of the message.", 
+													"Type"		=> "string" 
+												), 
+											"body"
+												=> array( 
+													"Help"		=> "The body of the message.", 
+													"Type"		=> "string" 
+												), 
+											"from_ip"
+												=> array( 
+													"Help"		=> "The IP address of the sender.", 
+													"Type"		=> "string" 
+												), 
+											"replyto_id"
+												=> array( 
+													"Help"		=> "If this is a reply, the ID of the message being replied to.", 
+													"Type"		=> "int", 
+													"Required"	=> FALSE 
+												)
+										), 
+									"DELETE"
+										=> array( 
+											// No args.  --Kris
+										) 
 								), 
 					"messageid"		=> array( 
-									
+									"GET"
+										=> array( 
+											"messageid"
+												=> array( 
+													"Help"		=> "The ID of the message to be retrieved.", 
+													"Type"		=> "int", 
+													"InURI"		=> TRUE 
+												) 
+										), 
+									"PUT"
+										=> array( 
+											"messageid"
+												=> array( 
+													"Help"		=> "The ID of the message to be updated.", 
+													"Type"		=> "int", 
+													"InURI"		=> TRUE 
+												), 
+											"...params"
+												=> array( 
+													"Help"		=> "The message properties to be updated with their new values.", 
+													"Type"		=> "string", 
+													"Format"	=> '/.+=.+/', 
+													"Min_Params"	=> 1 
+												) 
+										), 
+									"DELETE"
+										=> array( 
+											"messageid"
+												=> array( 
+													"Help"		=> "The ID of the message to be deleted.", 
+													"Type"		=> "int", 
+													"InURI"		=> TRUE 
+												) 
+										) 
 								), 
 					"posts"			=> array( 
-									
+									"GET"
+										=> array( 
+											"limit"
+												=> array( 
+													"Help"		=> "Number of results to be returned.", 
+													"Type"		=> "int", 
+													"Default"	=> 25, 
+													"Min"		=> 1, 
+													"Max"		=> 250 
+												), 
+											"page"
+												=> array( 
+													"Help"		=> "The page of results to be retrieved.  Offset = limit * (page - 1).  Ignored if offset is supplied.", 
+													"Type"		=> "int", 
+													"Default"	=> 1, 
+												), 
+											"offset"
+												=> array( 
+													"Help"		=> "Overrides page to specify an exact starting record.", 
+													"Type"		=> "int", 
+													"Min"		=> 1, 
+													"Required"	=> FALSE 
+												)
+										), 
+									"POST"
+										=> array( 
+											"title"
+												=> array( 
+													"Help"		=> "The title of the post.", 
+													"Type"		=> "string", 
+													// The minimum number of characters required.  --Kris
+													"Min"		=> 1, 
+													// The maximum number of characters allowed.  --Kris
+													"Max"		=> 255 
+												), 
+											"body"
+												=> array( 
+													"Help"		=> "The contents of the post.", 
+													"Type"		=> "string", 
+													"Min"		=> 10 
+												), 
+											"author"
+												=> array( 
+													"Help"		=> "The userid of the post's author.", 
+													"Type"		=> "int" 
+												), 
+											"author_ip"
+												=> array( 
+													"Help"		=> "The IP address of the author.", 
+													"Type"		=> "string" 
+												) 
+										), 
+									"DELETE"
+										=> array( 
+											// No args.  --Kris
+										)
 								), 
 					"postid"		=> array( 
-									
+									"GET"
+										=> array( 
+											"postid"
+												=> array( 
+													"Help"		=> "The ID of the post to be retrieved.", 
+													"Type"		=> "int", 
+													"InURI"		=> TRUE 
+												) 
+										), 
+									"PUT"
+										=> array( 
+											"postid"
+												=> array( 
+													"Help"		=> "The ID of the post to be updated.", 
+													"Type"		=> "int", 
+													"InURI"		=> TRUE 
+												), 
+											"...params"
+												=> array( 
+													"Help"		=> "The post properties to be updated with their new values.", 
+													"Type"		=> "string", 
+													"Format"	=> '/.+=.+/', 
+													"Min_Params"	=> 1 
+												) 
+										), 
+									"DELETE"
+										=> array( 
+											"postid"
+												=> array( 
+													"Help"		=> "The ID of the post to be deleted.", 
+													"Type"		=> "int", 
+													"InURI"		=> TRUE 
+												) 
+										) 
 								), 
 					"comments"		=> array( 
-									
+									"GET"
+										=> array( 
+											"postid"
+												=> array( 
+													"Help"		=> "The ID of the post whose comments are being retrieved.", 
+													"Type"		=> "int", 
+													"InURL"		=> TRUE 
+												), 
+											"limit"
+												=> array( 
+													"Help"		=> "Number of results to be returned.", 
+													"Type"		=> "int", 
+													"Default"	=> 25, 
+													"Min"		=> 1, 
+													"Max"		=> 250 
+												), 
+											"page"
+												=> array( 
+													"Help"		=> "The page of results to be retrieved.  Offset = limit * (page - 1).  Ignored if offset is supplied.", 
+													"Type"		=> "int", 
+													"Default"	=> 1, 
+												), 
+											"offset"
+												=> array( 
+													"Help"		=> "Overrides page to specify an exact starting record.", 
+													"Type"		=> "int", 
+													"Min"		=> 1, 
+													"Required"	=> FALSE 
+												)
+										), 
+									"POST"
+										=> array( 
+											"postid"
+												=> array( 
+													"Help"		=> "The ID of the post the new comment will belong to.", 
+													"Type"		=> "int", 
+													"InURL"		=> TRUE 
+												), 
+											"body"
+												=> array( 
+													"Help"		=> "The contents of the comment.", 
+													"Type"		=> "string", 
+													"Min"		=> 2, 
+													"Max"		=> 2000 
+												), 
+											"author"
+												=> array( 
+													"Help"		=> "The userid of the comment's author.", 
+													"Type"		=> "int" 
+												), 
+											"author_ip"
+												=> array( 
+													"Help"		=> "The IP address of the author.", 
+													"Type"		=> "string" 
+												) 
+										), 
+									"DELETE"
+										=> array( 
+											"postid"
+												=> array( 
+													"Help"		=> "The ID of the post whose comments are being deleted.", 
+													"Type"		=> "int", 
+													"InURL"		=> TRUE 
+												) 
+										)
 								), 
 					"cid"			=> array( 
-									
+									"GET"
+										=> array( 
+											"cid"
+												=> array( 
+													"Help"		=> "The ID of the comment to be retrieved.", 
+													"Type"		=> "int", 
+													"InURI"		=> TRUE 
+												) 
+										), 
+									"PUT"
+										=> array( 
+											"cid
+												=> array( 
+													"Help"		=> "The ID of the comment to be updated.", 
+													"Type"		=> "int", 
+													"InURI"		=> TRUE 
+												), 
+											"...params"
+												=> array( 
+													"Help"		=> "The comment properties to be updated with their new values.", 
+													"Type"		=> "string", 
+													"Format"	=> '/.+=.+/', 
+													"Min_Params"	=> 1 
+												) 
+										), 
+									"DELETE"
+										=> array( 
+											"cid"
+												=> array( 
+													"Help"		=> "The ID of the comment to be deleted.", 
+													"Type"		=> "int", 
+													"InURI"		=> TRUE 
+												) 
+										) 
 								), 
 					"users"			=> array( 
 									"GET"
@@ -166,16 +443,14 @@ class Config_Dispatch
 										) 
 								), 
 					"userid"		=> array( 
-									
-								), 
-					"username"		=> array( 
 									"GET"
 										=> array( 
-											"username"
+											"userid"
 												=> array( 
-													"Help"		=> "The username being queried.", 
-													"Type"		=> "string", 
-													"InURL"		=> TRUE 
+													"Help"		=> "The userid being queried.", 
+													"Type"		=> "int", 
+													// Specified in the URI instead of in the parameters.  --Kris
+													"InURI"		=> TRUE 
 												), 
 											"cols"
 												=> array( 
@@ -184,21 +459,355 @@ class Config_Dispatch
 													"Default" 	=> "username, registered, lastlogin, lastaction, lastip, bio, gender, status, friends, messages" 
 												) 
 										), 
+									"PUT"
+										=> array( 
+											"userid"
+												=> array( 
+													"Help"		=> "The userid being updated.", 
+													"Type"		=> "int", 
+													"InURI"		=> TRUE 
+												), 
+											// 0 or more unnamed parameters following these rules (denoted by the "...").  --Kris
+											"...cols"
+												=> array( 
+													"Help"		=> "The columns to update with specified values.", 
+													"Type"		=> "string", 
+													// A regex representation of the required format for this string.  --Kris
+													"Format"	=> '/.+=.+/', 
+													// Specify the "Min_Params" key to dictate a minimum number.  Same goes for "Max_Params".  --Kris
+													"Min_Params"	=> 1 
+												) 
+										), 
+									"DELETE"
+										=> array( 
+											"userid"
+												=> array( 
+													"Help"		=> "The userid being deleted.", 
+													"Type"		=> "int", 
+													"InURI"		=> TRUE 
+												) 
+										)
+								), 
+					"username"		=> array( 
+									"GET"
+										=> array( 
+											"username"
+												=> array( 
+													"Help"		=> "The username being queried.", 
+													"Type"		=> "string", 
+													// Specified in the URI instead of in the parameters.  --Kris
+													"InURI"		=> TRUE 
+												), 
+											"cols"
+												=> array( 
+													"Help" 		=> "The comma-delineated properties to be retrieved from the user.", 
+													"Type"		=> "string", 
+													"Default" 	=> "username, registered, lastlogin, lastaction, lastip, bio, gender, status, friends, messages" 
+												) 
+										), 
+									"POST"
+										=> array( 
+											"username"
+												=> array( 
+													"Help"		=> "The username being created.", 
+													"Type"		=> "string", 
+													// The following values aren't allowed, regardless of case.  --Kris
+													"Disallowed_Case_Insensitive"
+															=> array( 
+																"admin", 
+																"administrator", 
+																"moderator", 
+																"sysop", 
+																"sysadmin", 
+																"root", 
+																"webmaster" 
+															), 
+													// The following values aren't allowed if the case matches.  --Kris
+													"Disallowed"	=> array( 
+																"TESTING", 
+																"sPaMb0t", 
+																"SpAmB0T" 
+																// ....But "spamb0t" and "Spamb0t" are ok.  --Kris
+															), 
+													"InURI"		=> TRUE 
+												), 
+											"gender"
+												=> array( 
+													// I realize there are more gender identities than "man" and "woman".  But this is just an 
+													// example and I'd like to keep it as simple as possible for the sake of laziness.  Please 
+													// don't consider this a slight against trans and people with other gender identities.  --Kris
+													"Help"		=> "The gender of the user being created.", 
+													"Type"		=> "string", 
+													// Value must match one of these entries or it will be rejected.  --Kris
+													"Allowed"	=> array( 
+																"values" => array( 
+																		"man", 
+																		"woman" 
+																	), 
+																"case_sensitive" => FALSE 
+															) 
+												), 
+											"password"
+												=> array( 
+													"Help"		=> "The unencrypted password for the new user.  Leave blank to lock the account until the user activates it and creates their own password.", 
+													"Type"		=> "string", 
+													"Min"		=> 6, 
+													"Default"	=> NULL 
+												) 
+										), 
+									"PUT"
+										=> array( 
+											"username"
+												=> array( 
+													"Help"		=> "The username being updated.", 
+													"Type"		=> "string", 
+													"InURI"		=> TRUE 
+												), 
+											// 0 or more unnamed parameters following these rules (denoted by the "...").  --Kris
+											"...cols"
+												=> array( 
+													"Help"		=> "The columns to update with specified values.", 
+													"Type"		=> "string", 
+													// A regex representation of the required format for this string.  --Kris
+													"Format"	=> '/.+=.+/', 
+													// Specify the "Min_Params" key to dictate a minimum number.  Same goes for "Max_Params".  --Kris
+													"Min_Params"	=> 1 
+												) 
+										), 
+									"DELETE"
+										=> array( 
+											"username"
+												=> array( 
+													"Help"		=> "The username being deleted.", 
+													"Type"		=> "string", 
+													"InURI"		=> TRUE 
+												) 
+										)
 								), 
 					"men"			=> array( 
-									
+									"GET"
+										=> array( 
+											"limit"
+												=> array( 
+													"Help"		=> "Number of results to be returned.", 
+													"Type"		=> "int", 
+													"Default"	=> 25, 
+													"Min"		=> 1, 
+													"Max"		=> 250 
+												), 
+											"page"
+												=> array( 
+													"Help"		=> "The page of results to be retrieved.  Offset = limit * (page - 1).  Ignored if offset is supplied.", 
+													"Type"		=> "int", 
+													"Default"	=> 1, 
+												), 
+											"offset"
+												=> array( 
+													"Help"		=> "Overrides page to specify an exact starting record.", 
+													"Type"		=> "int", 
+													"Min"		=> 1, 
+													"Required"	=> FALSE 
+												)
+										), 
+									"PUT"
+										=> array( 
+											"status"
+												=> array( 
+													"Help"		=> "A numeric status code.  I.e. 0 = pending, 1 = active, 2 = admin, 3 = banned, etc.", 
+													"Type"		=> "int" 
+												) 
+										), 
+									"DELETE"
+										=> array( 
+											// No args.  --Kris
+										)
 								), 
 					"women"			=> array( 
-									
+									"GET"
+										=> array( 
+											"limit"
+												=> array( 
+													"Help"		=> "Number of results to be returned.", 
+													"Type"		=> "int", 
+													"Default"	=> 25, 
+													"Min"		=> 1, 
+													"Max"		=> 250 
+												), 
+											"page"
+												=> array( 
+													"Help"		=> "The page of results to be retrieved.  Offset = limit * (page - 1).  Ignored if offset is supplied.", 
+													"Type"		=> "int", 
+													"Default"	=> 1, 
+												), 
+											"offset"
+												=> array( 
+													"Help"		=> "Overrides page to specify an exact starting record.", 
+													"Type"		=> "int", 
+													"Min"		=> 1, 
+													"Required"	=> FALSE 
+												)
+										), 
+									"PUT"
+										=> array( 
+											"status"
+												=> array( 
+													"Help"		=> "A numeric status code.  I.e. 0 = pending, 1 = active, 2 = admin, 3 = banned, etc.", 
+													"Type"		=> "int" 
+												) 
+										), 
+									"DELETE"
+										=> array( 
+											// No args.  --Kris
+										)
 								), 
 					"friends"		=> array( 
-									
+									"GET"
+										=> array( 
+											"username"
+												=> array( 
+													"Help"		=> "The username whose friends list is being queried.", 
+													"Type"		=> "string", 
+													"InURI"		=> TRUE 
+												), 
+											"limit"
+												=> array( 
+													"Help"		=> "Number of results to be returned.", 
+													"Type"		=> "int", 
+													"Default"	=> 25, 
+													"Min"		=> 1, 
+													"Max"		=> 250 
+												), 
+											"page"
+												=> array( 
+													"Help"		=> "The page of results to be retrieved.  Offset = limit * (page - 1).  Ignored if offset is supplied.", 
+													"Type"		=> "int", 
+													"Default"	=> 1, 
+												), 
+											"offset"
+												=> array( 
+													"Help"		=> "Overrides page to specify an exact starting record.", 
+													"Type"		=> "int", 
+													"Min"		=> 1, 
+													"Required"	=> FALSE 
+												)
+										), 
+									"DELETE"
+										=> array( 
+											"username"
+												=> array( 
+													"Help"		=> "The username whose friends list is being deleted.", 
+													"Type"		=> "string", 
+													"InURI"		=> TRUE 
+												)
+										)
 								), 
 					"friend_username"	=> array( 
-									
+									"GET"
+										=> array( 
+											"username"
+												=> array( 
+													"Help"		=> "The username whose friend list entry is being queried.", 
+													"Type"		=> "string", 
+													"InURI"		=> TRUE 
+												), 
+											"friend_username"
+												=> array( 
+													"Help"		=> "The username of the friend list entry being queried.", 
+													"Type"		=> "string", 
+													"InURI"		=> TRUE 
+												) 
+										), 
+									"POST"
+										=> array( 
+											"username"
+												=> array( 
+													"Help"		=> "The first of two usernames to be made friends (order doesn't matter).", 
+													"Type"		=> "string", 
+													"InURI"		=> TRUE 
+												), 
+											"friend_username"
+												=> array( 
+													"Help"		=> "The second of two usernames to be made friends (order doesn't matter).", 
+													"Type"		=> "string", 
+													"InURI"		=> TRUE 
+												) 
+										), 
+									"PUT"
+										=> array( 
+											"username"
+												=> array( 
+													"Help"		=> "The first of two usernames in the friendship entry (order doesn't matter) being updated.", 
+													"Type"		=> "string", 
+													"InURI"		=> TRUE 
+												), 
+											"friend_username"
+												=> array( 
+													"Help"		=> "The second of two usernames in the friendship entry (order doesn't matter) being updated.", 
+													"Type"		=> "string", 
+													"InURI"		=> TRUE 
+												), 
+											"since"
+												=> array( 
+													"Help"		=> "A Unix timestamp denoting when they became friends.  This is the only field that can be updated because I said so.", 
+													"Type"		=> "int" 
+												) 
+										), 
+									"DELETE"
+										=> array( 
+											"username"
+												=> array( 
+													"Help"		=> "The first of two usernames in the friendship entry (order doesn't matter) being deleted.", 
+													"Type"		=> "string", 
+													"InURI"		=> TRUE 
+												), 
+											"friend_username"
+												=> array( 
+													"Help"		=> "The first of two usernames in the friendship entry (order doesn't matter) being deleted.", 
+													"Type"		=> "string", 
+													"InURI"		=> TRUE 
+												) 
+										) 
 								), 
-					"user_messages"	=> array( 
-									
+					"user_messages" 	=> array( 
+									"GET"
+										=> array( 
+											"username"
+												=> array( 
+													"Help"		=> "The username whose messages are being queried.", 
+													"Type"		=> "string", 
+													"InURI"		=> TRUE 
+												), 
+											"limit"
+												=> array( 
+													"Help"		=> "Number of results to be returned.", 
+													"Type"		=> "int", 
+													"Default"	=> 25, 
+													"Min"		=> 1, 
+													"Max"		=> 250 
+												), 
+											"page"
+												=> array( 
+													"Help"		=> "The page of results to be retrieved.  Offset = limit * (page - 1).  Ignored if offset is supplied.", 
+													"Type"		=> "int", 
+													"Default"	=> 1, 
+												), 
+											"offset"
+												=> array( 
+													"Help"		=> "Overrides page to specify an exact starting record.", 
+													"Type"		=> "int", 
+													"Min"		=> 1, 
+													"Required"	=> FALSE 
+												)
+										), 
+									"DELETE"
+										=> array( 
+											"username"
+												=> array( 
+													"Help"		=> "The username whose (incoming) messages are being deleted.", 
+													"Type"		=> "string", 
+													"InURI"		=> TRUE 
+												)
+										)
 								) 
 				);
 }
