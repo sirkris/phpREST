@@ -110,22 +110,301 @@ class Config_Dispatch
 	
 	public static $class_args = array( 
 					"messages"		=> array( 
-									
+									"GET"
+										=> array( 
+											"limit"
+												=> array( 
+													"Help"		=> "Number of results to be returned.", 
+													"Type"		=> "int", 
+													"Default"	=> 25, 
+													"Min"		=> 1, 
+													"Max"		=> 250 
+												), 
+											"page"
+												=> array( 
+													"Help"		=> "The page of results to be retrieved.  Offset = limit * (page - 1).  Ignored if offset is supplied.", 
+													"Type"		=> "int", 
+													"Default"	=> 1, 
+												), 
+											"offset"
+												=> array( 
+													"Help"		=> "Overrides page to specify an exact starting record.", 
+													"Type"		=> "int", 
+													"Min"		=> 1, 
+													"Required"	=> FALSE 
+												)
+										), 
+									"POST"
+										=> array( 
+											"from_username"
+												=> array( 
+													"Help"		=> "The username of the person sending the message.", 
+													"Type"		=> "string" 
+												), 
+											"to_username"
+												=> array( 
+													"Help"		=> "The username of the recipient.", 
+													"Type"		=> "string" 
+												), 
+											"subject"
+												=> array( 
+													"Help"		=> "The subject of the message.", 
+													"Type"		=> "string" 
+												), 
+											"body"
+												=> array( 
+													"Help"		=> "The body of the message.", 
+													"Type"		=> "string" 
+												), 
+											"from_ip"
+												=> array( 
+													"Help"		=> "The IP address of the sender.", 
+													"Type"		=> "string" 
+												), 
+											"replyto_id"
+												=> array( 
+													"Help"		=> "If this is a reply, the ID of the message being replied to.", 
+													"Type"		=> "int", 
+													"Required"	=> FALSE 
+												)
+										), 
+									"DELETE"
+										=> array( 
+											// No args.  --Kris
+										) 
 								), 
 					"messageid"		=> array( 
-									
+									"GET"
+										=> array( 
+											"messageid"
+												=> array( 
+													"Help"		=> "The ID of the message to be retrieved.", 
+													"Type"		=> "int", 
+													"InURI"		=> TRUE 
+												) 
+										), 
+									"PUT"
+										=> array( 
+											"messageid"
+												=> array( 
+													"Help"		=> "The ID of the message to be updated.", 
+													"Type"		=> "int", 
+													"InURI"		=> TRUE 
+												), 
+											"...params"
+												=> array( 
+													"Help"		=> "The message properties to be updated with their new values.", 
+													"Type"		=> "string", 
+													"Format"	=> '/.+=.+/', 
+													"Min_Params"	=> 1 
+												) 
+										), 
+									"DELETE"
+										=> array( 
+											"messageid"
+												=> array( 
+													"Help"		=> "The ID of the message to be deleted.", 
+													"Type"		=> "int", 
+													"InURI"		=> TRUE 
+												) 
+										) 
 								), 
 					"posts"			=> array( 
-									
+									"GET"
+										=> array( 
+											"limit"
+												=> array( 
+													"Help"		=> "Number of results to be returned.", 
+													"Type"		=> "int", 
+													"Default"	=> 25, 
+													"Min"		=> 1, 
+													"Max"		=> 250 
+												), 
+											"page"
+												=> array( 
+													"Help"		=> "The page of results to be retrieved.  Offset = limit * (page - 1).  Ignored if offset is supplied.", 
+													"Type"		=> "int", 
+													"Default"	=> 1, 
+												), 
+											"offset"
+												=> array( 
+													"Help"		=> "Overrides page to specify an exact starting record.", 
+													"Type"		=> "int", 
+													"Min"		=> 1, 
+													"Required"	=> FALSE 
+												)
+										), 
+									"POST"
+										=> array( 
+											"title"
+												=> array( 
+													"Help"		=> "The title of the post.", 
+													"Type"		=> "string", 
+													// The minimum number of characters required.  --Kris
+													"Min"		=> 1, 
+													// The maximum number of characters allowed.  --Kris
+													"Max"		=> 255 
+												), 
+											"body"
+												=> array( 
+													"Help"		=> "The contents of the post.", 
+													"Type"		=> "string", 
+													"Min"		=> 10 
+												), 
+											"author"
+												=> array( 
+													"Help"		=> "The userid of the post's author.", 
+													"Type"		=> "int" 
+												), 
+											"author_ip"
+												=> array( 
+													"Help"		=> "The IP address of the author.", 
+													"Type"		=> "string" 
+												) 
+										), 
+									"DELETE"
+										=> array( 
+											// No args.  --Kris
+										)
 								), 
 					"postid"		=> array( 
-									
+									"GET"
+										=> array( 
+											"postid"
+												=> array( 
+													"Help"		=> "The ID of the post to be retrieved.", 
+													"Type"		=> "int", 
+													"InURI"		=> TRUE 
+												) 
+										), 
+									"PUT"
+										=> array( 
+											"postid"
+												=> array( 
+													"Help"		=> "The ID of the post to be updated.", 
+													"Type"		=> "int", 
+													"InURI"		=> TRUE 
+												), 
+											"...params"
+												=> array( 
+													"Help"		=> "The post properties to be updated with their new values.", 
+													"Type"		=> "string", 
+													"Format"	=> '/.+=.+/', 
+													"Min_Params"	=> 1 
+												) 
+										), 
+									"DELETE"
+										=> array( 
+											"postid"
+												=> array( 
+													"Help"		=> "The ID of the post to be deleted.", 
+													"Type"		=> "int", 
+													"InURI"		=> TRUE 
+												) 
+										) 
 								), 
 					"comments"		=> array( 
-									
+									"GET"
+										=> array( 
+											"postid"
+												=> array( 
+													"Help"		=> "The ID of the post whose comments are being retrieved.", 
+													"Type"		=> "int", 
+													"InURL"		=> TRUE 
+												), 
+											"limit"
+												=> array( 
+													"Help"		=> "Number of results to be returned.", 
+													"Type"		=> "int", 
+													"Default"	=> 25, 
+													"Min"		=> 1, 
+													"Max"		=> 250 
+												), 
+											"page"
+												=> array( 
+													"Help"		=> "The page of results to be retrieved.  Offset = limit * (page - 1).  Ignored if offset is supplied.", 
+													"Type"		=> "int", 
+													"Default"	=> 1, 
+												), 
+											"offset"
+												=> array( 
+													"Help"		=> "Overrides page to specify an exact starting record.", 
+													"Type"		=> "int", 
+													"Min"		=> 1, 
+													"Required"	=> FALSE 
+												)
+										), 
+									"POST"
+										=> array( 
+											"postid"
+												=> array( 
+													"Help"		=> "The ID of the post the new comment will belong to.", 
+													"Type"		=> "int", 
+													"InURL"		=> TRUE 
+												), 
+											"body"
+												=> array( 
+													"Help"		=> "The contents of the comment.", 
+													"Type"		=> "string", 
+													"Min"		=> 2, 
+													"Max"		=> 2000 
+												), 
+											"author"
+												=> array( 
+													"Help"		=> "The userid of the comment's author.", 
+													"Type"		=> "int" 
+												), 
+											"author_ip"
+												=> array( 
+													"Help"		=> "The IP address of the author.", 
+													"Type"		=> "string" 
+												) 
+										), 
+									"DELETE"
+										=> array( 
+											"postid"
+												=> array( 
+													"Help"		=> "The ID of the post whose comments are being deleted.", 
+													"Type"		=> "int", 
+													"InURL"		=> TRUE 
+												) 
+										)
 								), 
 					"cid"			=> array( 
-									
+									"GET"
+										=> array( 
+											"cid"
+												=> array( 
+													"Help"		=> "The ID of the comment to be retrieved.", 
+													"Type"		=> "int", 
+													"InURI"		=> TRUE 
+												) 
+										), 
+									"PUT"
+										=> array( 
+											"cid
+												=> array( 
+													"Help"		=> "The ID of the comment to be updated.", 
+													"Type"		=> "int", 
+													"InURI"		=> TRUE 
+												), 
+											"...params"
+												=> array( 
+													"Help"		=> "The comment properties to be updated with their new values.", 
+													"Type"		=> "string", 
+													"Format"	=> '/.+=.+/', 
+													"Min_Params"	=> 1 
+												) 
+										), 
+									"DELETE"
+										=> array( 
+											"cid"
+												=> array( 
+													"Help"		=> "The ID of the comment to be deleted.", 
+													"Type"		=> "int", 
+													"InURI"		=> TRUE 
+												) 
+										) 
 								), 
 					"users"			=> array( 
 									"GET"
