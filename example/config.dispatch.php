@@ -382,7 +382,7 @@ class Config_Dispatch
 										), 
 									"PUT"
 										=> array( 
-											"cid
+											"cid"
 												=> array( 
 													"Help"		=> "The ID of the comment to be updated.", 
 													"Type"		=> "int", 
