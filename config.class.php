@@ -97,7 +97,11 @@ class Config
 	 * of a request, the one corresponding to the top-most member of this array will take precedence over the others.
 	 * 
 	 * The valid types are "body" and "params".  If a request includes a type not specified for its method here, it will simply 
-	 * be ignored; i.e. no error will be thrown.  This is consistent with the REST spec.
+	 * be ignored; i.e. no error will be thrown.  This is consistent with the REST spec.  
+	 * 
+	 * These settings can be overridden in the $class_args definition in config.dispatch.php for any given argument by specifying 
+	 * the boolean "AllowBody" or "AllowParam" value.  Note also that the "InURI" value overrides these, as well, causing the 
+	 * argument to be accepted only in the URI string itself.
 	 * 
 	 * --Kris
 	 */
