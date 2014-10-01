@@ -68,6 +68,8 @@ class Config
 	 * If no phprest_return_type is supplied or a type is supplied that doesn't match any of the keys in this array, the 
 	 * top value will be used as the default.
 	 * 
+	 * The phprest_return_type can also be supplied in the request header, if applicable.
+	 * 
 	 * --Kris
 	 */
 	$supported_return_types = array( 
@@ -75,4 +77,49 @@ class Config
 					"XML"	=> "xml", 
 					"raw"	=> "plaintext" 
 				);
+	
+	/*
+	 * Supported body formats.  If a request body is allowed in lieu of / addition to parameters for a given request, the 
+	 * body must be in one of the formats specified here.  For each type listed here, a corresponding method must exist 
+	 * in the Parse_Request_Body_Data class in body_formats.class.php.  The parsing method will dispatch to each supported 
+	 * method to detect and parse the type in the request.  You can bypass this by specifying the reserved named parameter 
+	 * "phprest_request_body_type" or by specifying the request header by the same name.
+	 * 
+	 * --Kris
+	 */
+	$supported_request_body_types = array( 
+					"JSON", 
+					"XML" 
+				);
+	
+	/*
+	 * Which input types are available for each REST method by default.  If the same key is specified in multiple input types 
+	 * of a request, the one corresponding to the top-most member of this array will take precedence over the others.
+	 * 
+	 * The valid types are "body" and "params".  If a request includes a type not specified for its method here, it will simply 
+	 * be ignored; i.e. no error will be thrown.  This is consistent with the REST spec.  
+	 * 
+	 * These settings can be overridden in the $class_args definition in config.dispatch.php for any given argument by specifying 
+	 * the boolean "AllowBody" or "AllowParam" value.  Note also that the "InURI" value overrides these, as well, causing the 
+	 * argument to be accepted only in the URI string itself.
+	 * 
+	 * --Kris
+	 */
+	$valid_input_types = array( 
+					"GET"		=> array( 
+								"params" 
+							), 
+					"POST"		=> array( 
+								"body", 
+								"params" 
+							), 
+					"PUT"		=> array( 
+								"body", 
+								"params" 
+							), 
+					"DELETE"	=> array( 
+								"body", 
+								"params" 
+							) 
+			);
 }

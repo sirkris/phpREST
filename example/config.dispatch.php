@@ -154,7 +154,9 @@ class Config_Dispatch
 											"body"
 												=> array( 
 													"Help"		=> "The body of the message.", 
-													"Type"		=> "string" 
+													"Type"		=> "string", 
+													// Can't be passed as a URI parameter; must be in the body.  --Kris
+													"AllowParam"	=> FALSE 
 												), 
 											"from_ip"
 												=> array( 
@@ -180,7 +182,7 @@ class Config_Dispatch
 												=> array( 
 													"Help"		=> "The ID of the message to be retrieved.", 
 													"Type"		=> "int", 
-													"InURI"		=> TRUE 
+													"InURI"		=> TRUE // Automatically sets AllowBody and AllowParam to FALSE, as well.  --Kris
 												) 
 										), 
 									"PUT"
@@ -552,7 +554,9 @@ class Config_Dispatch
 													"Help"		=> "The unencrypted password for the new user.  Leave blank to lock the account until the user activates it and creates their own password.", 
 													"Type"		=> "string", 
 													"Min"		=> 6, 
-													"Default"	=> NULL 
+													"Default"	=> NULL, 
+													// Can't be passed in the body input; must be a parameter.  --Kris
+													"AllowBody"	=> FALSE 
 												) 
 										), 
 									"PUT"
