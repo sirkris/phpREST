@@ -42,6 +42,16 @@ class Config
 	$uri_tag_close = '])';
 	
 	/*
+	 * The supported protocols and their identifiers.
+	 * 
+	 * --Kris
+	 */
+	$uri_protocols = array( 
+				"HTTP"	=> "http://", 
+				"CLI"	=> "cli:/" 
+			);
+	
+	/*
 	 * The base URIs for the API.  Can be HTTP or any other format(s).  The array key can be anything you want; it's 
 	 * just a label to tell any human reading this what's what.  It makes no difference as far as the code is concerned.  
 	 * The array value should be the URI itself.
@@ -49,14 +59,14 @@ class Config
 	 * --Kris
 	 */
 	$base_uri_api = array( 
-				"HTTP"	=> "http://api.some-host.com", 
-				"CLI"	=> "cli:/api" 
+				"HTTP"	=> "api.some-host.com", 
+				"CLI"	=> "api" 
 			);
 	
 	/* The base URIs for the dev help portal.  Same format as the API base URIs array above.  --Kris */
 	$base_uri_dev = array( 
-				"HTTP"	=> "http://dev.some-host.com", 
-				"CLI"	=> "cli:/dev" 
+				"HTTP"	=> "dev.some-host.com", 
+				"CLI"	=> "dev" 
 			);
 	
 	/* 
