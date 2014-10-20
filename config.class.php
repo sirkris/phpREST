@@ -7,6 +7,7 @@ class Config
 	 * 
 	 * --Kris
 	 */
+	$include_exception_error_messages = TRUE;  // Should be set to FALSE in production.  --Kris
 	
 	/*
 	 * If a data element starts with an open tag and ends with a close tag, a phpREST client will treat what's 
