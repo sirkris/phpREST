@@ -13,7 +13,7 @@ class Responder
 			header( $header );
 		}
 		
-		die( "$code $body" );
+		die( "$body" );
 	}
 	
 	public static function response( $code, $message )
@@ -31,11 +31,32 @@ class Responder
 		}
 	}
 	
+	private static function _1xx( $code, $message )
+	{
+		self::validate_code_class( 1, $code );
+		
+		self::send_response( $code, "$code $message" );
+	}
+	
+	private static function _2xx( $code, $message )
+	{
+		self::validate_code_class( 2, $code );
+		
+		self::send_response( $code, "$message" );
+	}
+	
+	private static function _3xx( $code, $message )
+	{
+		self::validate_code_class( 3, $code );
+		
+		self::send_response( $code, "$code $message" );
+	}
+	
 	private static function _4xx( $code, $message )
 	{
 		self::validate_code_class( 4, $code );
 		
-		self::send_response( $code, $message );
+		self::send_response( $code, "$code $message" );
 	}
 	
 	private static function _5xx( $code, $message, $msg_config_override = FALSE )
@@ -44,7 +65,7 @@ class Responder
 		
 		$message = ( Config::$include_exception_error_messages === TRUE || $msg_config_override === TRUE ? $message : '' );
 		
-		self::send_response( $code, $message );
+		self::send_response( $code, "$code $message" );
 	}
 	
 	private static function validate_code_class( $d, $code )
