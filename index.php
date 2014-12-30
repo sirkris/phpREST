@@ -5,12 +5,15 @@ require( "handlers.class.php" );
 require( "config.class.php" );
 require( "uri.class.php" );
 
+require( "responder.class.php" );
+
 $uri = new URI( $_SERVER );
 
 /* No match for URI.  Return 404.  --Kris */
-if ( $this->class === FALSE )
+if ( $uri->class === FALSE )
 {
-	// TODO - Send 404 response to client.
+	$devuri = Config::$uri_protocols[$uri->protocol] . Config::$base_uri_dev[$uri->protocol];
+	Responder::response( 404, "The specified URI does not correspond to a defined API class.  See $devuri for current class/URI pairings." );
 	
 	die();
 }

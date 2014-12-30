@@ -16,29 +16,29 @@ class Responder
 		die( "$code $body" );
 	}
 	
-	public static function _generic( $code, $message )
+	public static function response( $code, $message )
 	{
 		try
 		{
 			if ( call_user_func_array( array( self, '_' . $code{0} . 'xx' ), array( $code, $message ) ) === FALSE )
 			{
-				self::send_response( 500, "No return method defined for code '$code'!" );
+				self::_5xx( 500, "No return method defined for code '$code'!" );
 			}
 		}
 		catch ( Exception $e )
 		{
-			self::send_response( 500, "Responder dispatch error : " . $e->getMessage() );
+			self::_5xx( 500, "Responder dispatch error : " . $e->getMessage() );
 		}
 	}
 	
-	public static function _4xx( $code, $message )
+	private static function _4xx( $code, $message )
 	{
 		self::validate_code_class( 4, $code );
 		
 		self::send_response( $code, $message );
 	}
 	
-	public static function _5xx( $code, $message, $msg_config_override = FALSE )
+	private static function _5xx( $code, $message, $msg_config_override = FALSE )
 	{
 		self::validate_code_class( 5, $code );
 		

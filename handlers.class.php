@@ -9,6 +9,6 @@ class Handlers
 	public static function exception_handler( Exception $e )
 	{
 		/* Uncaught exceptions return 500.  --Kris */
-		Responder::_5xx( 500, 'A server error occurred : ' . $e->getMessage() );
+		Responder::response( 500, 'A server error occurred : ' . $e->getMessage() );
 	}
 }
