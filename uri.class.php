@@ -9,8 +9,10 @@ class URI
 	public $method;
 	public $params;
 	public $body;
+	public $body_params;
 	public $class;
 	public $uri_vars;
+	public $uri_vars_assoc;
 	
 	public function __construct( $server = NULL )
 	{
@@ -25,6 +27,7 @@ class URI
 		$this->get_method();
 		$this->get_params();
 		$this->get_body();
+		$this->get_body_params();
 		$this->get_class_and_vars();
 	}
 	
@@ -125,12 +128,34 @@ class URI
 		$this->body = stream_get_contents( STDIN );
 	}
 	
+	private function get_body_params()
+	{
+		require_once( "config.class.php" );
+		require_once( "body_formats.class.php" );
+		
+		$this->body_params = array();
+		if ( !empty( trim( $this->body ) ) )
+		{
+			foreach ( Config::$supported_request_body_types as $type )
+			{
+				$parsed = call_user_func_array( array( 'Parse_Request_Body_Data', $type ), $this->body );
+				
+				if ( !empty( $parsed ) && is_array( $parsed ) )
+				{
+					$this->body_params = $parsed;
+					break;
+				}
+			}
+		}
+	}
+	
 	private function get_class_and_vars()
 	{
 		require_once( "config.dispatch.php" );
 		
 		$muri = FALSE;
 		$uri_vars = array();
+		$uri_vars_assoc = array();
 		$class = FALSE;
 		foreach ( Config_Dispatch::$classes as $class => $curi )
 		{
@@ -169,6 +194,7 @@ class URI
 				{
 					$muri = preg_replace( '/<\w+>/', $this->uri_pieces[$key], $muri, 1 );
 					$uri_vars[] = $this->uri_pieces[$key];
+					$uri_vars_assoc[trim( $m[0][0], '<>' )] = $this->uri_pieces[$key];
 				}
 					
 				$curi = substr( $URI, strpos( $URI, '>', $m[0][1] ) + 1 );
@@ -182,5 +208,6 @@ class URI
 		
 		$this->class = $class;
 		$this->uri_vars = $uri_vars;
+		$this->uri_vars_assoc = $uri_vars_assoc;
 	}
 }

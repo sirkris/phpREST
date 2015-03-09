@@ -112,6 +112,7 @@ class Config_Dispatch
 					"messages"		=> array( 
 									"GET"
 										=> array( 
+											// Params MUST be in the same order as their corresponding method arguments!  They're not passed by name.  --Kris
 											"limit"
 												=> array( 
 													"Help"		=> "Number of results to be returned.", 
@@ -191,7 +192,7 @@ class Config_Dispatch
 												=> array( 
 													"Help"		=> "The ID of the message to be updated.", 
 													"Type"		=> "int", 
-													"InURI"		=> TRUE 
+													"InURI"		=> TRUE
 												), 
 											"...params"
 												=> array( 
@@ -312,7 +313,7 @@ class Config_Dispatch
 												=> array( 
 													"Help"		=> "The ID of the post whose comments are being retrieved.", 
 													"Type"		=> "int", 
-													"InURL"		=> TRUE 
+													"InURI"		=> TRUE 
 												), 
 											"limit"
 												=> array( 
@@ -342,7 +343,7 @@ class Config_Dispatch
 												=> array( 
 													"Help"		=> "The ID of the post the new comment will belong to.", 
 													"Type"		=> "int", 
-													"InURL"		=> TRUE 
+													"InURI"		=> TRUE 
 												), 
 											"body"
 												=> array( 
@@ -368,7 +369,7 @@ class Config_Dispatch
 												=> array( 
 													"Help"		=> "The ID of the post whose comments are being deleted.", 
 													"Type"		=> "int", 
-													"InURL"		=> TRUE 
+													"InURI"		=> TRUE 
 												) 
 										)
 								), 
