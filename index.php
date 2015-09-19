@@ -38,8 +38,8 @@ foreach ( Config_Dispatch::$class_args[$uri->class][$uri->method] as $arg => $ru
 	foreach ( array_reverse( Config::$valid_input_types[$uri->method] ) as $type )
 	{
 		/* FALSE overrides.  --Kris */
-		if ( ( $type === 'params' && ( isset( $rules['AllowParam'] ) && $rules['AllowParam'] !== FALSE ) ) 
-			|| ( $type === 'body' && ( isset( $rules['AllowBody'] ) && $rules['AllowBody'] !== FALSE ) ) )
+		if ( ( $type === 'params' && ( !isset( $rules['AllowParam'] ) || $rules['AllowParam'] !== FALSE ) ) 
+			|| ( $type === 'body' && ( !isset( $rules['AllowBody'] ) || $rules['AllowBody'] !== FALSE ) ) )
 		{
 			continue;
 		}
