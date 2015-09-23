@@ -344,7 +344,21 @@ foreach ( Config_Dispatch::$class_args[$uri->class][$uri->method] as $arg => $ru
 				
 				if ( is_array( $param ) )
 				{
-					// TODO
+					// I don't think it would be wise to allow recursion here.  --Kris
+					foreach ( $param as $subparam )
+					{
+						// Ignore arrays and objects.  Compare the rest, each against each entry in the rule.  --Kris
+						if ( !is_array( $subparam ) && !is_object( $subparam ) )
+						{
+							foreach ( $rule as $condition )
+							{
+								if ( $subparam === $condition )
+								{
+									$err[] = 'Value "' . $subparam . '" is not permitted.';
+								}
+							}
+						}
+					}
 				}
 				else if ( is_object( $param ) )
 				{
@@ -374,7 +388,21 @@ foreach ( Config_Dispatch::$class_args[$uri->class][$uri->method] as $arg => $ru
 				
 				if ( is_array( $param ) )
 				{
-					// TODO
+					// I don't think it would be wise to allow recursion here.  --Kris
+					foreach ( $param as $subparam )
+					{
+						// Ignore arrays and objects.  Compare the rest, each against each entry in the rule.  --Kris
+						if ( !is_array( $subparam ) && !is_object( $subparam ) )
+						{
+							foreach ( $rule as $condition )
+							{
+								if ( strtoupper( $subparam ) === strtoupper( $condition ) )
+								{
+									$err[] = 'Value "' . $subparam . '" is not permitted.';
+								}
+							}
+						}
+					}
 				}
 				else if ( is_object( $param ) )
 				{
