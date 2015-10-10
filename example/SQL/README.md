@@ -1,4 +1,5 @@
-The files contained in this directory are derived from phpSQL, a component of the phpNova framework which is currently in early alpha stage of development.
+The files contained in this directory are derived from phpSQL, a component of the phpNova framework which is currently in early alpha stage of development.  
+Please note that phpSQL is very outdated and should not be used outside of a demo/testing context such as this.  I do plan to get back to it, one of these days.
 
 These files are standalone and not tracked from the phpSQL repo.  They have also been preconfigured to use the phpREST_Example database.  You should not need 
 to modify them at all if you imported the phpREST_Example.sql file directly and have the php_mysqli extension installed.
